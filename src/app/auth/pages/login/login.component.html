@@ -1,1 +1,70 @@
-<p>login works!</p>
+<div fxLayout="row" fxLayoutAlign="space-evenly center" class="container">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    fxLayoutAlign="center"
+    autocomplete="off"
+  >
+    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
+      <h2 fxLayoutAlign="center center" class="title">Ingresar</h2>
+
+      <h4 class="marginBottom">Email:</h4>
+
+      <mat-form-field appearance="fill" class="marginBottom">
+        <input
+          class="marginBottom"
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="Ejemplo@abc.com"
+          maxlength="30"
+        />
+
+        <mat-error class="error" *ngIf="fieldValid('email')">
+          * {{ emailErrors }}</mat-error
+        >
+      </mat-form-field>
+
+      <h4 class="marginBottom">Contraseña:</h4>
+
+      <mat-form-field appearance="fill" class="marginBottom">
+        <input
+          class="marginBottom"
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="******"
+          maxlength="25"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+
+        <mat-error class="error" *ngIf="fieldValid('password')">
+          * Mínimo 6 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="marginBottom"
+        [ngClass]="{
+          backgroundButton: loginForm.valid,
+          buttonDisabled: loginForm.invalid
+        }"
+        type="submit"
+        [disabled]="loginForm.invalid"
+      >
+        Ingresar
+      </button>
+    </div>
+  </form>
+</div>

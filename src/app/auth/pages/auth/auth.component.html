@@ -1,1 +1,16 @@
-<p>auth works!</p>
+<div fxLayout="column" fxLayoutAlign="space-between center" class="main">
+  <div fxLayout="row" fxLayoutAlign="center center" class="image">
+    <img
+      src="/assets/logo_pagos360.svg"
+      alt="logo"
+      fxFlex="30%"
+      fxFlex.xs="50"
+    />
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="container">
+    <main class="home" fxFlex="100">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

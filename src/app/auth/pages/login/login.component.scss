@@ -1,0 +1,30 @@
+.title {
+  font-size: 40px;
+  margin: 0 0 40px 0 !important;
+  color: white;
+}
+
+h4 {
+  color: white;
+}
+
+mat-form-field {
+  width: 280px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  padding: 0 10px !important;
+}
+
+img {
+  width: 25%;
+}
+
+form {
+  height: 80%;
+  width: 100%;
+  background-image: url("/assets/fondo.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto;
+}

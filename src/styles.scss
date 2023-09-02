@@ -1,5 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Signika Negative", sans-serif !important;
+  letter-spacing: 1px !important;
+
+  background-color: var(--background-blue-dark);
+}
+
+:root {
+  --background-blue-dark: #0b2545;
+  --background-blue: #134074;
+  --error: #d90808;
+  --white: #eef4ed;
+  --background-button-blue: #157eab;
+  --color-lilac: #9b9eff;
+  --background-disable: #8080807a;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.marginBottom {
+  margin: 0 0 5px 0 !important;
+}
+
+.marginBot {
+  margin-bottom: 15px !important;
+}
+.backgroundButton {
+  background-color: var(--background-blue) !important;
+  color: var(--white) !important;
+}
+
+.buttonDisabled {
+  background-color: var(--background-disable) !important;
+}
+
+.error {
+  font-size: 12px !important;
+  color: var(--error) !important;
+}
+
+button {
+  letter-spacing: 1px !important;
+}
