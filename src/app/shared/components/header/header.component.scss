@@ -1,0 +1,25 @@
+.margin-right {
+  margin-right: 15px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+.mat-toolbar {
+  background-color: var(--background-blue);
+  letter-spacing: 1px;
+}
+
+.principalPage {
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.image {
+  width: 30px;
+  height: 30px;
+}

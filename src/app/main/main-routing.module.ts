@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './pages/main/main.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: MainComponent,

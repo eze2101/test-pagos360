@@ -1,1 +1,28 @@
-<p>header works!</p>
+<mat-toolbar class="container">
+  <div fxLayout="row nowrap" fxFlex="54" fxLayoutAlign="space-between center">
+    <button mat-button [routerLink]="['/main/cobranzas']" class="principalPage">
+      Inicio
+    </button>
+    <img src="assets/logo_pagos360.svg" alt="" />
+  </div>
+  <div fxLayout="row nowrap" fxFlex="45" fxLayoutAlign="flex-end center">
+    <span *ngIf="userData" class="margin-right">{{ userData.userName }}</span>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      fxLayoutAlign="center center"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/172/172163.png"
+        alt="imagen del perfil"
+        class="image"
+      />
+    </button>
+    <mat-menu #menu="matMenu">
+      <span *ngIf=""></span>
+      <button mat-menu-item>Mi información</button>
+      <button mat-menu-item (click)="logOut()">Log Out</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

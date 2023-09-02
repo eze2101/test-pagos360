@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/interfaces/user.interface';
-import { tap, of, Observable } from 'rxjs';
+import { tap, of, Observable, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,20 +14,16 @@ export class AppService {
 
   public email: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
-  private user!: User;
+  userData = new BehaviorSubject<User | null>(null);
 
-  public get User(): User {
-    return this.user;
-  }
-
-  public get UserIDSessionStorage(): string | null {
+  public get UserIDSessionStorage(): number | null {
     let resultToken = sessionStorage.getItem('token');
     let result;
     resultToken && (result = JSON.parse(atob(resultToken)));
     return result?.token;
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   //Posible AuthService
 
@@ -35,7 +32,7 @@ export class AppService {
     return this.http.get<User[]>(url).pipe(
       tap((resp) => {
         if (resp.length == 1) {
-          this.user = resp[0];
+          this.userData.next(resp[0]);
         } else {
           throw 'El correo o la contraseña son incorrectas';
         }
@@ -44,29 +41,31 @@ export class AppService {
   }
 
   logOut() {
-    this.user = undefined!;
     sessionStorage.clear();
+    this.router.navigate(['/auth/login']);
   }
 
   validateAuth(): Observable<boolean> {
     if (!this.UserIDSessionStorage) {
       return of(false);
     } else {
-      this.getUser(this.UserIDSessionStorage);
       return of(true);
     }
   }
 
-  getUser(id: string) {
-    const url = `${this.baseUrl}/users?id=${id}`;
-    return this.http.get<User[]>(url).pipe(
-      tap((resp) => {
+  getUser() {
+    const url = `${this.baseUrl}/users?id=${this.UserIDSessionStorage}`;
+    this.http.get<User[]>(url).subscribe({
+      next: (resp) => {
         if (resp.length == 1) {
-          this.user = resp[0];
+          this.userData.next(resp[0]);
         } else {
           throw 'El usuario no fue encontrado';
         }
-      })
-    );
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

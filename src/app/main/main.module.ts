@@ -14,8 +14,7 @@ import { HeaderComponent } from '../shared/components/header/header.component';
     TableComponent,
     MainComponent,
     CollectionsComponent,
-    HeaderComponent,
   ],
-  imports: [CommonModule, MainRoutingModule],
+  imports: [CommonModule, MainRoutingModule, HeaderComponent],
 })
 export class MainModule {}

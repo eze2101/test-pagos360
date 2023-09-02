@@ -15,7 +15,8 @@ const checkAuthStatus = (InLogin: boolean): boolean | Observable<boolean> => {
   return appService.validateAuth().pipe(
     tap((isAuthenticated) => {
       isAuthenticated
-        ? InLogin && router.navigate(['/main/cobranzas'])
+        ? (InLogin && router.navigate(['/main/cobranzas']),
+          appService.getUser())
         : !InLogin && router.navigate(['/auth/login']);
     }),
     map((isAuthenticated) => {
