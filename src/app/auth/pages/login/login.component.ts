@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private appService: AppService // private validatorService: ValidatorsService, // private loadingService: LoadingService
+    private appService: AppService
   ) {}
   ngOnInit(): void {
     this.createForm();
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       next: (user) => {
         let token = btoa(JSON.stringify({ token: user[0].id }));
         sessionStorage.setItem('token', token);
-        this.router.navigate(['/cobranza']);
+        this.router.navigate(['main/cobranzas']);
       },
       error: (err) => {
         console.log(err);

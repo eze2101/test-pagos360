@@ -6,18 +6,16 @@ import { DateFilterComponent } from './components/date-filter/date-filter.compon
 import { TableComponent } from './components/table/table.component';
 import { MainComponent } from './pages/main/main.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
-
+import { HeaderComponent } from '../shared/components/header/header.component';
 
 @NgModule({
   declarations: [
     DateFilterComponent,
     TableComponent,
     MainComponent,
-    CollectionsComponent
+    CollectionsComponent,
+    HeaderComponent,
   ],
-  imports: [
-    CommonModule,
-    MainRoutingModule
-  ]
+  imports: [CommonModule, MainRoutingModule],
 })
-export class MainModule { }
+export class MainModule {}
