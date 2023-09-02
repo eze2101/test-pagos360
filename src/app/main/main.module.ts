@@ -9,12 +9,12 @@ import { CollectionsComponent } from './pages/collections/collections.component'
 import { HeaderComponent } from '../shared/components/header/header.component';
 
 @NgModule({
-  declarations: [
-    DateFilterComponent,
-    TableComponent,
-    MainComponent,
+  declarations: [TableComponent, MainComponent],
+  imports: [
+    CommonModule,
+    MainRoutingModule,
+    HeaderComponent,
     CollectionsComponent,
   ],
-  imports: [CommonModule, MainRoutingModule, HeaderComponent],
 })
 export class MainModule {}
