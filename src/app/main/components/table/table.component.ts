@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, effect } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import {
@@ -8,7 +8,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Report, collection } from 'src/app/shared/interfaces/table.interface';
+import { Report } from 'src/app/shared/interfaces/table.interface';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { AppService } from 'src/app/services/app.service';
@@ -35,7 +35,22 @@ export class TableComponent implements OnInit {
   hideTable: boolean = true;
   dataSource = new MatTableDataSource<Report>();
   @ViewChild(MatPaginator) paginator?: MatPaginator;
-  loadingData: boolean = false;
+  loadingData = this.appService.loadingData();
+
+  loadingEffect = effect(() => {
+    this.loadingData = this.appService.loadingData();
+  });
+
+  reportsEffect = effect(
+    () => {
+      let reports = this.appService.reports();
+      this.loadingData = false;
+      reports && this.writeData(reports);
+    },
+    {
+      allowSignalWrites: true,
+    }
+  );
 
   columnsToDisplay = [
     'payer_name',
@@ -48,25 +63,16 @@ export class TableComponent implements OnInit {
 
   constructor(private appService: AppService) {}
 
-  ngOnInit(): void {
-    // this.appService.loadingData.subscribe((loading) => {
-    //   this.loadingData = loading;
-    // });
+  ngOnInit(): void {}
 
-    this.loadingData = this.appService.loadingData();
-    console.log(this.loadingData);
-
-    this.appService.collection.subscribe((resp) => {
-      console.log(this.loadingData);
-      if (resp?.data?.length! > 0) {
-        this.dataSource = new MatTableDataSource<Report>(resp?.data);
-        this.dataSource.paginator = this.paginator!;
-        this.loadingData = false;
-        this.hideTable = false;
-      } else {
-        this.hideTable = true;
-        this.loadingData = false;
-      }
-    });
+  writeData(reports: Report[]) {
+    if (reports.length > 0) {
+      this.dataSource = new MatTableDataSource<Report>(reports);
+      this.dataSource.paginator = this.paginator!;
+      this.hideTable = false;
+    } else {
+      this.hideTable = true;
+    }
+    this.appService.loadingData.set(false);
   }
 }

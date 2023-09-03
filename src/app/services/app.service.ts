@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/interfaces/user.interface';
-import { tap, of, Observable, BehaviorSubject } from 'rxjs';
+import { tap, of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { collection } from '../shared/interfaces/table.interface';
+import { Report, collection } from '../shared/interfaces/table.interface';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -13,19 +13,33 @@ import Swal from 'sweetalert2';
 export class AppService {
   // private baseUrl: string = environment?.UrlServer;
   private baseUrl: string = 'http://localhost:3000';
+  private urlCollection: string =
+    'https://api.sandbox.pagos360.com/report/collection';
+  private Authorization: string =
+    'Bearer NjQwNDMxNGI1YzU0YjllYmVhYjJiZDdmY2E5Y2EyMDg5ZDVlODFmNzRmMDc1OGJmMDY2OTY0NzlhNGJiZWQwNA';
 
   public email: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
-  userData = new BehaviorSubject<User | null>(null);
-  collection = new BehaviorSubject<collection | null>(null);
-  // loadingData = new BehaviorSubject<boolean>(false);
+  userData = signal<User | undefined>(undefined);
+  reports = signal<Report[] | undefined>(undefined);
   loadingData = signal(false);
 
   public get UserIDSessionStorage(): number | null {
     let resultToken = sessionStorage.getItem('token');
     let result;
-    resultToken && (result = JSON.parse(atob(resultToken)));
-    return result?.token;
+    try {
+      resultToken && (result = JSON.parse(atob(resultToken)));
+
+      return result?.token;
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ups!',
+        text: 'Error en su sesión de usuario',
+      });
+      this.logOut();
+      return null;
+    }
   }
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -37,7 +51,7 @@ export class AppService {
     return this.http.get<User[]>(url).pipe(
       tap((resp) => {
         if (resp.length == 1) {
-          this.userData.next(resp[0]);
+          this.userData.set(resp[0]);
         } else {
           throw 'El correo o la contraseña son incorrectas';
         }
@@ -63,36 +77,28 @@ export class AppService {
     this.http.get<User[]>(url).subscribe({
       next: (resp) => {
         if (resp.length == 1) {
-          this.userData.next(resp[0]);
+          this.userData.set(resp[0]);
         } else {
           throw 'El usuario no fue encontrado';
         }
       },
       error: (err) => {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Ups!',
+          text: 'Ocurrio un eror!!',
+        });
       },
     });
   }
 
-  geCollections(date: string) {
-    const url = `https://api.sandbox.pagos360.com/report/collection/${date}`;
+  getCollections(date: string) {
+    const url = `${this.urlCollection}/${date}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer NjQwNDMxNGI1YzU0YjllYmVhYjJiZDdmY2E5Y2EyMDg5ZDVlODFmNzRmMDc1OGJmMDY2OTY0NzlhNGJiZWQwNA',
+      Authorization: `${this.Authorization}`,
     });
 
-    this.http.get<collection>(url, { headers: headers }).subscribe({
-      next: (resp) => {
-        this.collection.next(resp);
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Ups!',
-          text: err.error.message,
-        });
-      },
-    });
+    return this.http.get<collection>(url, { headers: headers });
   }
 }

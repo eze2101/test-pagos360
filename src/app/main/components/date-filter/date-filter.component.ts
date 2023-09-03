@@ -41,14 +41,18 @@ export class DateFilterComponent implements OnInit {
   ngOnInit(): void {
     this.limitDate.setDate(this.limitDate.getDate() - 1);
     this.createForm();
-    this.dateForm.get('date')?.valueChanges.subscribe((resp) => {
-      this.date.emit(moment(resp._d).format('DD-MM-YYYY'));
-    });
+    this.emitDate();
   }
 
   createForm(): void {
     this.dateForm = this.fb.group({
       date: [],
+    });
+  }
+
+  emitDate() {
+    this.dateForm.get('date')?.valueChanges.subscribe((resp) => {
+      this.date.emit(moment(resp._d).format('DD-MM-YYYY'));
     });
   }
 }

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DateFilterComponent } from '../../components/date-filter/date-filter.component';
 import { TableComponent } from '../../components/table/table.component';
 import { AppService } from 'src/app/services/app.service';
 import { MaterialModule } from 'src/app/shared/material/material.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-collections',
@@ -22,17 +23,24 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 export class CollectionsComponent implements OnInit {
   dateSelect!: string;
   loadingData: boolean = false;
-
   constructor(private appService: AppService) {}
 
   ngOnInit(): void {}
 
   selectDate(date: string) {
     this.dateSelect = date;
-    // this.appService.loadingData.next(true);
-    this.appService.loadingData.update((value) => true);
-    console.log(this.appService.loadingData());
-
-    this.appService.geCollections(this.dateSelect);
+    this.appService.loadingData.set(true);
+    this.appService.getCollections(this.dateSelect).subscribe({
+      next: (resp) => {
+        this.appService.reports.set(resp.data);
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ups!',
+          text: err.error.message,
+        });
+      },
+    });
   }
 }
