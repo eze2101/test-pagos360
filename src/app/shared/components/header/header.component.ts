@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -20,8 +20,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   paths!: string[];
   namePost: string = '';
   subcriptions: Subscription[] = [];
+  sections: string[] = [
+    'cobranzas',
+    'reversiones',
+    'devoluciones',
+    'rendición',
+    'retenciones y percepciones',
+  ];
 
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService, private router: Router) {}
 
   ngOnInit(): void {
     this.getUserData();
@@ -46,6 +53,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       },
     });
     this.subcriptions.push(sub);
+  }
+
+  go(section: string) {
+    if (section == 'retenciones y percepciones') {
+      section = 'retenciones-percepciones';
+    }
+    this.router.navigateByUrl(`/main/${section}`);
   }
 
   logOut(): void {

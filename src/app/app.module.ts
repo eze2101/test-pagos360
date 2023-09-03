@@ -8,9 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
+import { PageComingSoonComponent } from './shared/components/page-coming-soon/page-coming-soon.component';
 
 @NgModule({
-  declarations: [AppComponent, ErrorPageComponent],
+  declarations: [AppComponent, ErrorPageComponent, PageComingSoonComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

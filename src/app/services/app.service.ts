@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/interfaces/user.interface';
 import { tap, of, Observable, BehaviorSubject } from 'rxjs';
@@ -18,7 +18,8 @@ export class AppService {
 
   userData = new BehaviorSubject<User | null>(null);
   collection = new BehaviorSubject<collection | null>(null);
-  loadingData = new BehaviorSubject<boolean>(false);
+  // loadingData = new BehaviorSubject<boolean>(false);
+  loadingData = signal(false);
 
   public get UserIDSessionStorage(): number | null {
     let resultToken = sessionStorage.getItem('token');

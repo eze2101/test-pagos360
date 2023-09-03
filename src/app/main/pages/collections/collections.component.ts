@@ -29,7 +29,9 @@ export class CollectionsComponent implements OnInit {
 
   selectDate(date: string) {
     this.dateSelect = date;
-    this.appService.loadingData.next(true);
+    // this.appService.loadingData.next(true);
+    this.appService.loadingData.update((value) => true);
+    console.log(this.appService.loadingData());
 
     this.appService.geCollections(this.dateSelect);
   }

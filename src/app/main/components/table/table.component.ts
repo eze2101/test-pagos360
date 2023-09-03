@@ -49,9 +49,12 @@ export class TableComponent implements OnInit {
   constructor(private appService: AppService) {}
 
   ngOnInit(): void {
-    this.appService.loadingData.subscribe((loading) => {
-      this.loadingData = loading;
-    });
+    // this.appService.loadingData.subscribe((loading) => {
+    //   this.loadingData = loading;
+    // });
+
+    this.loadingData = this.appService.loadingData();
+    console.log(this.loadingData);
 
     this.appService.collection.subscribe((resp) => {
       console.log(this.loadingData);
