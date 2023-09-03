@@ -1,6 +1,5 @@
 <div>
   <app-date-filter (date)="selectDate($event)"></app-date-filter>
-  <span>
-    {{ dateSelect }}
-  </span>
+
+  <app-table [collections]="collections"></app-table>
 </div>

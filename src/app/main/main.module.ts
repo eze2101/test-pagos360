@@ -9,7 +9,7 @@ import { CollectionsComponent } from './pages/collections/collections.component'
 import { HeaderComponent } from '../shared/components/header/header.component';
 
 @NgModule({
-  declarations: [TableComponent, MainComponent],
+  declarations: [MainComponent],
   imports: [
     CommonModule,
     MainRoutingModule,

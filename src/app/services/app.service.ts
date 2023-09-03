@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/interfaces/user.interface';
 import { tap, of, Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { collection } from '../shared/interfaces/table.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class AppService {
   public email: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
   userData = new BehaviorSubject<User | null>(null);
+  collection = new BehaviorSubject<collection | null>(null);
 
   public get UserIDSessionStorage(): number | null {
     let resultToken = sessionStorage.getItem('token');
@@ -66,6 +68,19 @@ export class AppService {
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+
+  geCollections(date: string) {
+    const url = `https://api.sandbox.pagos360.com/report/collection/${date}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization:
+        'Bearer NjQwNDMxNGI1YzU0YjllYmVhYjJiZDdmY2E5Y2EyMDg5ZDVlODFmNzRmMDc1OGJmMDY2OTY0NzlhNGJiZWQwNA',
+    });
+
+    this.http.get<collection>(url, { headers: headers }).subscribe((resp) => {
+      this.collection.next(resp);
     });
   }
 }
