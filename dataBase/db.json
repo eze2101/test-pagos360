@@ -1,23 +1,22 @@
 {
-    "users": [
-        {
-            "id":24956,
-            "userName": "EzePereyra",
-            "email": "ezequiel-pereyra@hotmail.com",
-            "password":"eze1234"
-        },
-        {
-            "id":5084,
-            "userName": "Gianna",
-            "email": "gianna@pagos360.com",
-            "password":"giannaRH"
-        },
-        {
-            "id":2064,
-            "userName": "Admin",
-            "email": "admin@pagos360.com",
-            "password":"admin123"
-        }
-    ] 
-  
-  }
+  "users": [
+    {
+      "id": 24956,
+      "userName": "EzePereyra",
+      "email": "ezequiel-pereyra@hotmail.com",
+      "password": "eze1234"
+    },
+    {
+      "id": 5084,
+      "userName": "Gianna",
+      "email": "gianna@pagos360.com",
+      "password": "giannaRH"
+    },
+    {
+      "id": 2064,
+      "userName": "Admin",
+      "email": "admin@pagos360.com",
+      "password": "admin123"
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import { ErrorPageComponent } from './shared/components/error-page/error-page.co
 import { PageComingSoonComponent } from './shared/components/page-coming-soon/page-coming-soon.component';
 
 @NgModule({
-  declarations: [AppComponent, ErrorPageComponent, PageComingSoonComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
