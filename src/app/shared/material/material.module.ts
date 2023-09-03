@@ -12,6 +12,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -27,6 +30,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatToolbarModule,
     MatMenuModule,
     MatDatepickerModule,
+    MatPaginatorModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MaterialModule {}

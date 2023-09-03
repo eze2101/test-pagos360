@@ -1,5 +1,13 @@
+.marginBot {
+  margin-bottom: 30px;
+}
+
 table {
   width: 100%;
+}
+
+:host ::ng-deep .mat-mdc-table {
+  background-color: transparent !important;
 }
 
 tr.example-detail-row {
@@ -20,4 +28,30 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .borde {
   border-top: 1px solid #0000001f;
+}
+
+img {
+  width: 200px;
+  height: auto;
+}
+
+.gif {
+  object-fit: none;
+  width: 350px;
+  height: auto;
+}
+
+mat-paginator {
+  border-radius: 30px !important;
+  // background-color: #e9e9e9 !important;
+  background-color: white !important;
+}
+
+h4 {
+  margin: 0px !important;
+  padding: 0 10px;
+}
+
+.contairnerDetail {
+  padding: 10px 0;
 }

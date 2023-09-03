@@ -5,6 +5,7 @@ import { User } from '../shared/interfaces/user.interface';
 import { tap, of, Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { collection } from '../shared/interfaces/table.interface';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class AppService {
 
   userData = new BehaviorSubject<User | null>(null);
   collection = new BehaviorSubject<collection | null>(null);
+  loadingData = new BehaviorSubject<boolean>(false);
 
   public get UserIDSessionStorage(): number | null {
     let resultToken = sessionStorage.getItem('token');
@@ -79,8 +81,17 @@ export class AppService {
         'Bearer NjQwNDMxNGI1YzU0YjllYmVhYjJiZDdmY2E5Y2EyMDg5ZDVlODFmNzRmMDc1OGJmMDY2OTY0NzlhNGJiZWQwNA',
     });
 
-    this.http.get<collection>(url, { headers: headers }).subscribe((resp) => {
-      this.collection.next(resp);
+    this.http.get<collection>(url, { headers: headers }).subscribe({
+      next: (resp) => {
+        this.collection.next(resp);
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ups!',
+          text: err.error.message,
+        });
+      },
     });
   }
 }

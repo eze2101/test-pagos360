@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import {
@@ -8,10 +8,11 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Datum, collection } from 'src/app/shared/interfaces/table.interface';
+import { Report, collection } from 'src/app/shared/interfaces/table.interface';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { AppService } from 'src/app/services/app.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-table',
@@ -31,9 +32,10 @@ import { AppService } from 'src/app/services/app.service';
   ],
 })
 export class TableComponent implements OnInit {
-  @Input() collections!: collection;
-
-  constructor(private appService: AppService) {}
+  hideTable: boolean = true;
+  dataSource = new MatTableDataSource<Report>();
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  loadingData: boolean = false;
 
   columnsToDisplay = [
     'payer_name',
@@ -42,12 +44,26 @@ export class TableComponent implements OnInit {
     'available_at',
   ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement!: Datum | null;
-  dataSource = new MatTableDataSource<Datum>();
+  expandedElement!: Report | null;
+
+  constructor(private appService: AppService) {}
 
   ngOnInit(): void {
+    this.appService.loadingData.subscribe((loading) => {
+      this.loadingData = loading;
+    });
+
     this.appService.collection.subscribe((resp) => {
-      this.dataSource = new MatTableDataSource<Datum>(resp?.data);
+      console.log(this.loadingData);
+      if (resp?.data?.length! > 0) {
+        this.dataSource = new MatTableDataSource<Report>(resp?.data);
+        this.dataSource.paginator = this.paginator!;
+        this.loadingData = false;
+        this.hideTable = false;
+      } else {
+        this.hideTable = true;
+        this.loadingData = false;
+      }
     });
   }
 }

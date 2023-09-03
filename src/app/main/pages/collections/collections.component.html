@@ -1,5 +1,10 @@
-<div>
-  <app-date-filter (date)="selectDate($event)"></app-date-filter>
+<div fxLayout="column" fxLayoutAlign="none center" class="container">
+  <h1>Coabranzas</h1>
+  <mat-divider></mat-divider>
+  <div fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="15px">
+    <h3>Seleccione la fecha para ver los reportes</h3>
+    <app-date-filter (date)="selectDate($event)"></app-date-filter>
+  </div>
 
-  <app-table [collections]="collections"></app-table>
+  <app-table></app-table>
 </div>

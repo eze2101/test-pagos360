@@ -34,10 +34,12 @@ import * as moment from 'moment';
 export class DateFilterComponent implements OnInit {
   @Output() date = new EventEmitter<string>();
   dateForm!: FormGroup;
+  limitDate: Date = new Date();
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.limitDate.setDate(this.limitDate.getDate() - 1);
     this.createForm();
     this.dateForm.get('date')?.valueChanges.subscribe((resp) => {
       this.date.emit(moment(resp._d).format('DD-MM-YYYY'));

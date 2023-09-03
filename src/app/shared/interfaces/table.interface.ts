@@ -4,10 +4,10 @@ export interface collection {
   total_collected: number;
   total_gross_fee: number;
   total_net_amount: number;
-  data: Datum[];
+  data: Report[];
 }
 
-export interface Datum {
+export interface Report {
   informed_date: Date;
   request_id: number;
   external_reference: string;
