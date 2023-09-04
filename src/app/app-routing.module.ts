@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 import { canActivateGuard, canMatchGuard } from './guard/auth.guard';
 

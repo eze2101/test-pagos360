@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, effect } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-
+import { CommonModule } from '@angular/common';
 import {
   animate,
   state,
@@ -8,11 +7,13 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Report } from 'src/app/shared/interfaces/table.interface';
-import { CommonModule } from '@angular/common';
+
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import { AppService } from 'src/app/services/app.service';
+
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AppService } from 'src/app/services/app.service';
+import { Report } from 'src/app/shared/interfaces/table.interface';
 
 @Component({
   selector: 'app-table',

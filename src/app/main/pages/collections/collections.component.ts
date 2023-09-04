@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
+import { MaterialModule } from 'src/app/shared/material/material.module';
+import Swal from 'sweetalert2';
+
 import { DateFilterComponent } from '../../components/date-filter/date-filter.component';
 import { TableComponent } from '../../components/table/table.component';
 import { AppService } from 'src/app/services/app.service';
-import { MaterialModule } from 'src/app/shared/material/material.module';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-collections',
@@ -20,12 +22,10 @@ import Swal from 'sweetalert2';
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.scss'],
 })
-export class CollectionsComponent implements OnInit {
+export class CollectionsComponent {
   dateSelect!: string;
   loadingData: boolean = false;
   constructor(private appService: AppService) {}
-
-  ngOnInit(): void {}
 
   selectDate(date: string) {
     this.dateSelect = date;

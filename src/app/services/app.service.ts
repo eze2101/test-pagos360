@@ -12,18 +12,19 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AppService {
-  // private baseUrl: string = environment?.UrlServer;
-  private baseUrl: string = 'http://localhost:3000';
-  private urlCollection: string =
-    'https://api.sandbox.pagos360.com/report/collection';
-  private Authorization: string =
-    'Bearer NjQwNDMxNGI1YzU0YjllYmVhYjJiZDdmY2E5Y2EyMDg5ZDVlODFmNzRmMDc1OGJmMDY2OTY0NzlhNGJiZWQwNA';
+  private baseUrl: string = environment.UrlServer;
+  private urlCollection: string = environment.urlCollection;
+  private Authorization: string = environment.Authorization;
 
   public email: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
   userData = signal<User | undefined>(undefined);
   reports = signal<Report[] | undefined>(undefined);
   loadingData = signal(false);
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  //Posible AuthService
 
   public get UserIDSessionStorage(): number | null {
     let resultToken = sessionStorage.getItem('token');
@@ -42,10 +43,6 @@ export class AppService {
       return null;
     }
   }
-
-  constructor(private http: HttpClient, private router: Router) {}
-
-  //Posible AuthService
 
   login(email: string, password: string) {
     const url = `${this.baseUrl}/users?email=${email}&password=${password}`;
@@ -92,6 +89,8 @@ export class AppService {
       },
     });
   }
+
+  //Posible MainService
 
   getCollections(date: string) {
     const url = `${this.urlCollection}/${date}`;

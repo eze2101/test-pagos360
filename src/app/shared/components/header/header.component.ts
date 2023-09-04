@@ -1,10 +1,11 @@
 import { Component, effect } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+import { MaterialModule } from '../../material/material.module';
 
 import { User } from '../../interfaces/user.interface';
 import { AppService } from 'src/app/services/app.service';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../material/material.module';
 
 @Component({
   selector: 'app-header',

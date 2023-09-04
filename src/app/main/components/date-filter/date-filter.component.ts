@@ -1,5 +1,7 @@
-import { MaterialModule } from 'src/app/shared/material/material.module';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -11,9 +13,9 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import 'moment';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
+
+import { MaterialModule } from 'src/app/shared/material/material.module';
 
 @Component({
   selector: 'app-date-filter',

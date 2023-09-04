@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { AppService } from 'src/app/services/app.service';
-import { User } from 'src/app/shared/interfaces/user.interface';
 import Swal from 'sweetalert2';
-// import { AuthService } from 'src/app/services/auth.service';
-// import Swal from 'sweetalert2';
-// import { ValidatorsService } from '../../../services/validators.service';
-// import { LoadingService } from '../../../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +33,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['main/cobranzas']);
       },
       error: (err) => {
-        console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Ups!',
@@ -50,10 +45,10 @@ export class LoginComponent implements OnInit {
   createForm(): void {
     this.loginForm = this.fb.group({
       email: [
-        'ezequiel-pereyra@hotmail.com',
+        null,
         [Validators.required, Validators.pattern(this.appService.email)],
       ],
-      password: ['eze1234', [Validators.required, Validators.minLength(6)]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
 
