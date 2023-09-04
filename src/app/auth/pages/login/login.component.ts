@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['main/cobranzas']);
       },
       error: (err) => {
+        err?.name == 'HttpErrorResponse' && (err = 'Error de servidor');
         Swal.fire({
           icon: 'error',
           title: 'Ups!',
