@@ -1,7 +1,9 @@
 # TestPagos360
 
 Este proyecto fue creado utlizando la versión de Angular 16.2.0.
-Se utilizaron las siguientes librerias 
+
+Se utilizaron las siguientes librerias:
+
 - Angular Material
 - Flex Layout
 - Json-Server
@@ -10,6 +12,7 @@ Se utilizaron las siguientes librerias
 
 ## Levantar el proyecto
 
+- npm install
 - json-server --watch dataBase/db.json
 - ng serve -o
 
@@ -17,9 +20,9 @@ Se utilizaron las siguientes librerias
 
 Usuario:
 
-Correo: admin@pagos360.com
+- Correo: admin@pagos360.com
 
-Contraseña: admin123
+- Contraseña: admin123
 
 Pueden encontrar dos usuarios más en la carpeta dataBase/db.json, pueden modificar los datos a voluntad para las pruebas.
 
