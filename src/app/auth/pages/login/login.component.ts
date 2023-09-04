@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Ups!',
-          text: 'No fue posible conectarse',
+          text: err,
         });
       },
     });

@@ -11,14 +11,19 @@ table {
 }
 
 tr.example-detail-row {
+  cursor: default !important;
   height: 0;
 }
 
 .example-element-row td {
   border-bottom-width: 0;
 }
+tr:hover {
+  cursor: pointer;
+}
 
 tr.example-element-row:not(.example-expanded-row):hover {
+  cursor: pointer;
   background: whitesmoke;
 }
 

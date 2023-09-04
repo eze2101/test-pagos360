@@ -44,7 +44,6 @@ export class TableComponent implements OnInit {
   reportsEffect = effect(
     () => {
       let reports = this.appService.reports();
-      this.loadingData = false;
       reports && this.writeData(reports);
     },
     {
