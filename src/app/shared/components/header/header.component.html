@@ -1,11 +1,7 @@
 <mat-toolbar class="container">
   <mat-toolbar-row>
     <div fxLayout="row nowrap" fxFlex="54" fxLayoutAlign="space-between center">
-      <button
-        mat-button
-        [routerLink]="['/main/cobranzas']"
-        class="principalPage"
-      >
+      <button mat-button [routerLink]="[getRouteMain()]" class="principalPage">
         Inicio
       </button>
       <img src="assets/logo_pagos360.svg" alt="" />

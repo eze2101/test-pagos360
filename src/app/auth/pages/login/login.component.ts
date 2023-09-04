@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AppService } from 'src/app/services/app.service';
+import { Routes } from 'src/app/shared/enums/routes.enum';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
       next: (user) => {
         let token = btoa(JSON.stringify({ token: user[0].id }));
         sessionStorage.setItem('token', token);
-        this.router.navigate(['main/cobranzas']);
+        this.router.navigate([Routes.MAIN]);
       },
       error: (err) => {
         err?.name == 'HttpErrorResponse' && (err = 'Error de servidor');

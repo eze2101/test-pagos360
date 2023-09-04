@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Report, collection } from '../shared/interfaces/table.interface';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { Routes } from '../shared/enums/routes.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,7 @@ export class AppService {
 
   logOut() {
     sessionStorage.clear();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate([Routes.LOGIN]);
   }
 
   validateAuth(): Observable<boolean> {

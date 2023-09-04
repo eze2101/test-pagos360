@@ -6,6 +6,7 @@ import { MaterialModule } from '../../material/material.module';
 
 import { User } from '../../interfaces/user.interface';
 import { AppService } from 'src/app/services/app.service';
+import { Routes } from '../../enums/routes.enum';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,10 @@ export class HeaderComponent {
     'rendición',
     'retenciones y percepciones',
   ];
+
+  getRouteMain() {
+    return Routes.MAIN;
+  }
 
   userEffect = effect(() => {
     let user = this.appService.userData();
