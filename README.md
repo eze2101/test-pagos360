@@ -1,27 +1,42 @@
 # TestPagos360
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Este proyecto fue creado utlizando la versión de Angular 16.2.0.
+Se utilizaron las siguientes librerias 
+- Angular Material
+- Flex Layout
+- Json-Server
+- Moment
+- sweetalert2
 
-## Development server
+## Levantar el proyecto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- json-server --watch dataBase/db.json
+- ng serve -o
 
-## Code scaffolding
+## Información de prueba
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Usuario:
 
-## Build
+Correo: admin@pagos360.com
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Contraseña: admin123
 
-## Running unit tests
+Pueden encontrar dos usuarios más en la carpeta dataBase/db.json, pueden modificar los datos a voluntad para las pruebas.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Detalles sobre el desarrollo y toma de decisiones
 
-## Running end-to-end tests
+La estructura de carpetas fue pensada para una aplicación con un futuro crecimiento y que no quedaria en solo algunas pantallas.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Se creo una pantalla de Login como metodo de autenticacion para que ciertos usuarios puedan acceder a la aplicación, para el logeo se utiliza Json-Server para simular un backend y un archivo Json como base de datos, vale aclarar que este metodo no es de lo más seguro pero sirve para los fines de este Proyecto.
 
-## Further help
+Ademas se agregaron verificaciones de autenticaciones (guards) para evitar que usuarios no logeados puedan acceder al contenido de la aplicación, ademas se guarda un Token en la sesionStorage con el id semi encriptado del usuario (él cual es usado para recuperar su informacíon nuevamente cuando es necesario), lo ideal seria hacerlo mediante JWT u otra validacion mediante backend, pero esta manera sirve para ejemplificar alguna medida de seguridad
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Una vez autenticado y logeado, navegamos a la pantalla de Cobranzas, donde vamos a encontrar un seleccionador de Fechas, el cual va a generar la consulta de los reportes de cobro de ese día. Los cuales seran mostrado en una tabla desplegable, pudiendo acceder a toda su información.
+
+Al navegar a una ruta incorrecta, el usuario es llevado a una página de error, con la posibilida de volver al inicio, (en caso de estar logueado, a la pagina de cobranzas, en el caso de no estarlo, al login).
+
+Se agrego a modo de complemento un header con la opción de deslogueo y ademas rutas que navegana a una pantalla de “proximamente”.
+
+Se creó un unico servicio llamado AppService, la lógica podria haberse divido en 2 o más servicios, pero al no ser demasiada, no me pareció mal utilizar un solo.
+
+La aplicación no es responsive pero se ve bien en dimensiones superiores a 960x540, de ser necesario puedo trabajar más en ello.
