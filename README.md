@@ -43,3 +43,7 @@ Se agrego a modo de complemento un header con la opción de deslogueo y ademas r
 Se creó un unico servicio llamado AppService, la lógica podria haberse divido en 2 o más servicios, pero al no ser demasiada, no me pareció mal utilizar un solo.
 
 La aplicación no es responsive pero se ve bien en dimensiones superiores a 960x540, de ser necesario puedo trabajar más en ello.
+
+## Mejoras
+
+Se implento en una rama aparte una mejora en el manejo de las Signals, ademas de un Interceptor.
