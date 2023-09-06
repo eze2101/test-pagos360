@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { User } from '../shared/interfaces/user.interface';
 import { tap, of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { Report, collection } from '../shared/interfaces/table.interface';
+import { collection } from '../shared/interfaces/table.interface';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../shared/enums/routes.enum';
+import { UserStoreService } from '../signals/signals.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +20,7 @@ export class AppService {
 
   public email: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
-  userData = signal<User | undefined>(undefined);
-  reports = signal<Report[] | undefined>(undefined);
-  loadingData = signal(false);
+  private userSignal = inject(UserStoreService);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -50,7 +49,7 @@ export class AppService {
     return this.http.get<User[]>(url).pipe(
       tap((resp) => {
         if (resp.length == 1) {
-          this.userData.set(resp[0]);
+          this.userSignal.setState(resp[0]);
         } else {
           throw 'El correo o la contraseña son incorrectas';
         }
@@ -76,7 +75,7 @@ export class AppService {
     this.http.get<User[]>(url).subscribe({
       next: (resp) => {
         if (resp.length == 1) {
-          this.userData.set(resp[0]);
+          this.userSignal.setState(resp[0]);
         } else {
           throw 'El usuario no fue encontrado';
         }

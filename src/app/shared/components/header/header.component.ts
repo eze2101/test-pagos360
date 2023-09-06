@@ -1,12 +1,12 @@
-import { Component, effect } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../../material/material.module';
 
-import { User } from '../../interfaces/user.interface';
 import { AppService } from 'src/app/services/app.service';
 import { Routes } from '../../enums/routes.enum';
+import { UserStoreService } from 'src/app/signals/signals.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,6 @@ import { Routes } from '../../enums/routes.enum';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  userData: User | undefined = undefined;
   paths!: string[];
   namePost: string = '';
   sections: string[] = [
@@ -26,15 +25,12 @@ export class HeaderComponent {
     'rendición',
     'retenciones y percepciones',
   ];
+  private userSignal = inject(UserStoreService);
+  readonly user = this.userSignal.stateObjet.asReadonly();
 
   getRouteMain() {
     return Routes.MAIN;
   }
-
-  userEffect = effect(() => {
-    let user = this.appService.userData();
-    user && (this.userData = user);
-  });
 
   constructor(private appService: AppService, private router: Router) {}
 

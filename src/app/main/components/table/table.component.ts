@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, effect } from '@angular/core';
+import { Component, ViewChild, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   animate,
@@ -12,8 +12,11 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { AppService } from 'src/app/services/app.service';
 import { Report } from 'src/app/shared/interfaces/table.interface';
+import {
+  LoadingStoreService,
+  ReportStoreService,
+} from 'src/app/signals/signals.service';
 
 @Component({
   selector: 'app-table',
@@ -32,25 +35,21 @@ import { Report } from 'src/app/shared/interfaces/table.interface';
     ]),
   ],
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
+  private loadingStore = inject(LoadingStoreService);
+  private reportSignal = inject(ReportStoreService);
+  readonly loading = this.loadingStore.stateBoolean.asReadonly();
+  readonly reports = this.reportSignal.stateArray.asReadonly();
+
   hideTable: boolean = true;
+
   dataSource = new MatTableDataSource<Report>();
   @ViewChild(MatPaginator) paginator?: MatPaginator;
-  loadingData = this.appService.loadingData();
 
-  loadingEffect = effect(() => {
-    this.loadingData = this.appService.loadingData();
+  reportsEffect = effect(() => {
+    let report = this.reports();
+    report && this.setTable(report);
   });
-
-  reportsEffect = effect(
-    () => {
-      let reports = this.appService.reports();
-      reports && this.writeData(reports);
-    },
-    {
-      allowSignalWrites: true,
-    }
-  );
 
   columnsToDisplay = [
     'payer_name',
@@ -61,11 +60,7 @@ export class TableComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement!: Report | null;
 
-  constructor(private appService: AppService) {}
-
-  ngOnInit(): void {}
-
-  writeData(reports: Report[]) {
+  setTable(reports: Report[]) {
     if (reports.length > 0) {
       this.dataSource = new MatTableDataSource<Report>(reports);
       this.dataSource.paginator = this.paginator!;
@@ -73,6 +68,5 @@ export class TableComponent implements OnInit {
     } else {
       this.hideTable = true;
     }
-    this.appService.loadingData.set(false);
   }
 }

@@ -7,7 +7,7 @@
       <img src="assets/logo_pagos360.svg" alt="" />
     </div>
     <div fxLayout="row nowrap" fxFlex="45" fxLayoutAlign="flex-end center">
-      <span *ngIf="userData" class="margin-right">{{ userData.userName }}</span>
+      <span *ngIf="user()" class="margin-right">{{ user().userName }}</span>
 
       <button
         mat-icon-button

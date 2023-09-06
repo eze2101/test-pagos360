@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from 'src/app/shared/material/material.module';
@@ -8,6 +8,10 @@ import Swal from 'sweetalert2';
 import { DateFilterComponent } from '../../components/date-filter/date-filter.component';
 import { TableComponent } from '../../components/table/table.component';
 import { AppService } from 'src/app/services/app.service';
+import {
+  LoadingStoreService,
+  ReportStoreService,
+} from 'src/app/signals/signals.service';
 
 @Component({
   selector: 'app-collections',
@@ -23,18 +27,22 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./collections.component.scss'],
 })
 export class CollectionsComponent {
+  private loadingStore = inject(LoadingStoreService);
+  private reportSignal = inject(ReportStoreService);
+  private appService = inject(AppService);
+
   dateSelect!: string;
-  loadingData: boolean = false;
-  constructor(private appService: AppService) {}
 
   selectDate(date: string) {
     this.dateSelect = date;
-    this.appService.loadingData.set(true);
+    this.loadingStore.setStateBoolean(true);
     this.appService.getCollections(this.dateSelect).subscribe({
       next: (resp) => {
-        this.appService.reports.set(resp.data);
+        this.reportSignal.setStateArray(resp.data);
+        this.loadingStore.setStateBoolean(false);
       },
       error: (err) => {
+        this.loadingStore.setStateBoolean(false);
         Swal.fire({
           icon: 'error',
           title: 'Ups!',

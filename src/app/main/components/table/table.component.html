@@ -1,6 +1,6 @@
 <div class="marginBot" fxLayout="column">
   <div
-    *ngIf="hideTable && !loadingData; else viewTable"
+    *ngIf="hideTable && !loading(); else viewTable"
     fxLayout="column"
     fxLayoutAlign="none center"
   >
@@ -10,7 +10,7 @@
 
   <ng-template #viewTable>
     <table
-      *ngIf="!loadingData"
+      *ngIf="!loading()"
       mat-table
       [dataSource]="dataSource"
       multiTemplateDataRows
@@ -141,7 +141,7 @@
       ></tr>
     </table>
   </ng-template>
-  <div [hidden]="hideTable || loadingData">
+  <div [hidden]="hideTable || loading()">
     <mat-paginator
       MatPaginator
       [pageSizeOptions]="[10, 20, 30]"
@@ -152,7 +152,7 @@
   </div>
 </div>
 
-<div [hidden]="!loadingData">
+<div [hidden]="!loading()">
   <div fxLayout="column" fxLayoutAlign="none center" class="marginBot">
     <h3>Buscando resultados...</h3>
     <img src="assets/loading.gif" alt="" class="gif" />
